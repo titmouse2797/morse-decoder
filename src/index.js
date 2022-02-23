@@ -37,9 +37,49 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
-function decode(expr) {
-    // write your solution here
-}
+    const ten_eleven = {
+        '10': '.',
+        '11': '-',
+      };
+      
+
+      function removeStartNulls (str) {
+      while (str.startsWith('00')) {
+        str = str.slice(2);
+      };
+      return str;
+      }
+      
+  
+      function decodeToMorse (str) {
+      let arr = [];
+      while (str) {
+        let letter = str.slice(0,2);
+        str = str.slice(2);
+        arr.push(ten_eleven[letter]);
+      };
+      return arr.join('');
+      }
+      
+
+      function decode(expr) {
+      let our = '';
+      
+      while (expr) {
+        let letterBin = expr.slice(0,10);
+        expr = expr.slice(10);
+      
+        letterBin = removeStartNulls(letterBin);
+        
+        if (letterBin == '**********') {
+          our += ' '
+        } else {
+          our += MORSE_TABLE[decodeToMorse(letterBin)];
+        };
+      };
+        
+      return our;
+      };
 
 module.exports = {
     decode
